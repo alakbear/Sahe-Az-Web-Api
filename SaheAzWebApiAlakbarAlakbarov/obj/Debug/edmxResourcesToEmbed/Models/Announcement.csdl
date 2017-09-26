@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyDbModelAnnouncement" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Announcement">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="publish_date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Announcement_User" FromRole="Announcement" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="MyDbModelAnnouncement.FK_User_Announcement" FromRole="Announcement" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+    <Property Name="first_name" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+    <Property Name="last_name" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+    <Property Name="mobile" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="register_date" Type="DateTime" Precision="3" />
+    <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Announcement" Relationship="Self.FK_Announcement_User" FromRole="User" ToRole="Announcement" />
+    <Property Name="announcement_id" Type="Int32" />
+    <NavigationProperty Name="Announcement1" Relationship="MyDbModelAnnouncement.FK_User_Announcement" FromRole="User" ToRole="Announcement" />
+  </EntityType>
+  <Association Name="FK_Announcement_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Announcement" Type="Self.Announcement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Announcement">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MyDbEntitiesAnnouncement" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Announcement" EntityType="Self.Announcement" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Announcement_User" Association="Self.FK_Announcement_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Announcement" EntitySet="Announcement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Announcement" Association="MyDbModelAnnouncement.FK_User_Announcement">
+      <End Role="Announcement" EntitySet="Announcement" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_User_Announcement">
+    <End Type="MyDbModelAnnouncement.Announcement" Role="Announcement" Multiplicity="0..1" />
+    <End Type="MyDbModelAnnouncement.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Announcement">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="announcement_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

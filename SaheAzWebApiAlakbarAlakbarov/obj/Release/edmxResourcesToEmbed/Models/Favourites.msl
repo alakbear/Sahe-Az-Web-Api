@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyDbModel1StoreContainer" CdmEntityContainer="MyDbEntitiesFavourite">
+    <EntitySetMapping Name="Favourite">
+      <EntityTypeMapping TypeName="MyDbModel1.Favourite">
+        <MappingFragment StoreEntitySet="Favourite">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="announcement_id" ColumnName="announcement_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
